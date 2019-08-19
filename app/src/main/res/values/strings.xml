@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Skate Medallo</string>
+    <string name="skater">Skater</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="insert_password">Ingrese contraseña</string>
+    <string name="repeat_password">Repita contraseña</string>
+    <string name="accept">Aceptar</string>
+    <string name="cerrar_sesi_n">Cerrar sesión</string>
+    <string name="registro">Registro</string>
+    <string name="skate_medallo">SKATE MEDALLO</string>
+    <string name="sign_in">Sign in</string>
+</resources>
