@@ -11,4 +11,24 @@
     <string name="registro">Registro</string>
     <string name="skate_medallo">SKATE MEDALLO</string>
     <string name="sign_in">Sign in</string>
+    <string name="facebook_app_id">431435941052905</string> <string name="fb_login_protocol_scheme">fb431435941052905</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="home">Home</string>
+    <string name="spots">Spots</string>
+    <string name="store">Store</string>
+    <string name="homefragment">Recycler view con las fotos subidas por los usuarios, indicando lugar y nombre de
+        usuario
+    </string>
+    <string name="spotsfragment">Recycler view con la lista de los Spots</string>
+    <string name="storefragment">Image button para ingresar a la pagina principal de las tiendas locales.</string>
+    <string name="perfil">Perfil</string>
+    <string name="sugerencias">Sugerencias</string>
+    <string name="tiendas_locales">Tiendas Locales</string>
+    <string name="title_activity_spots_maps">Map</string>
 </resources>

@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:title="@string/perfil"
+            android:id="@+id/mperfil"
+            app:showAsAction="withText"
+
+    />
+
+    <item
+            android:title="@string/sugerencias"
+            android:id="@+id/msugerencias"
+            app:showAsAction="withText"
+
+    />
+
     <item
             android:title="@string/cerrar_sesi_n"
             android:id="@+id/mhome"
             android:icon="@mipmap/menu_icon"
-            app:showAsAction="always"/>
+            app:showAsAction="withText"
+            android:onClick="logOutMenuOnClicked"/>
 
 </menu>

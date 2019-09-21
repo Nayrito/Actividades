@@ -1,73 +1,73 @@
 package com.example.loginactivity
 
-import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.Toast
-import androidx.core.app.ActivityCompat.startActivityForResult
-import kotlinx.android.synthetic.main.activity_main.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.tabs.TabLayout
+import androidx.viewpager.widget.ViewPager
+import androidx.appcompat.app.AppCompatActivity
+import android.view.Menu
+import android.view.MenuItem
+import androidx.core.content.ContextCompat.startActivity
+import com.example.loginactivity.ui.main.SectionsPagerAdapter
+import com.facebook.login.LoginManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
-
+    private var user = FirebaseAuth.getInstance().currentUser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
+        val viewPager: ViewPager = findViewById(R.id.view_pager)
+        viewPager.adapter = sectionsPagerAdapter
+        val tabs: TabLayout = findViewById(R.id.tabs)
+        tabs.setupWithViewPager(viewPager)
+        saveUser(user)
+
+
+
+    }
+    override fun onBackPressed() {
+        super.onBackPressed()
+        var intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
-    fun onButtonClicked(view:View) {
-        if (view is Button){
-            when (view.id) {
-                R.id.btLogin -> {
-                    var email = etEmail.text.toString()
-                    var pass = etPassword.text.toString()
-                    if (email.isEmpty()) {
-                        Toast.makeText(this, "ingrese el correo", Toast.LENGTH_SHORT).show()
-                    } else if (pass.isEmpty()) {
-                        Toast.makeText(this, "ingrese la contraseña", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this, "usuario no registrado", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                R.id.btSign_in -> {
-                    etEmail.text.clear()
-                    etPassword.text.clear()
-                    var intent = Intent(this, RegistroActivity::class.java)
-                    startActivityForResult(intent, 123)
-                }
-
-            }
-        }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_overflow,menu)
+        return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+    fun logOutMenuOnClicked(item:MenuItem){
 
-        if(requestCode == 123 && resultCode == Activity.RESULT_OK) {
+        FirebaseAuth.getInstance().signOut()
+        //LoginManager.getInstance().logOut()
+        goToLoginActivity()
+    }
 
-                var email_recive = data!!.extras?.getString("useremail")
-                var pass_recive = data.extras?.getString("userpass")
-                btLogin.setOnClickListener {
-                    var email = etEmail.text.toString()
-                    var pass = etPassword.text.toString()
-                    if (email.isEmpty()) {
-                        Toast.makeText(this, "ingrese el correo", Toast.LENGTH_SHORT).show()
-                    } else if (pass.isEmpty()) {
-                        Toast.makeText(this, "ingrese la contraseña", Toast.LENGTH_SHORT).show()
-                    } else if (!(email.equals(email_recive)) || !(pass.equals(pass_recive))) {
-                        Toast.makeText(this, "Error en usuario o contraseña", Toast.LENGTH_SHORT).show()
-                    } else {
-                        etEmail.text.clear()
-                        etPassword.text.clear()
-                        var intent1 = Intent(this, HomeActivity::class.java)
-                        intent1.putExtra("useremail", email)
-                        intent1.putExtra("userpass", pass)
-                        startActivityForResult(intent1, 123)
+    private fun goToLoginActivity() {
+        val intent = Intent(this,LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    private fun saveUser(user: FirebaseUser?) {
 
-                    }
-                }
-        }
+        val name = user?.displayName
+        val id = user?.uid.toString()
+        val email = user?.email
+
+
+        val user = User(name,email,id )
+        val database= FirebaseDatabase.getInstance()
+        val myRef = database.getReference("usuarios")
+
+        myRef.child(id).setValue(user)
     }
 }
