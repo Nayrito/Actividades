@@ -11,7 +11,8 @@
     <string name="registro">Registro</string>
     <string name="skate_medallo">SKATE MEDALLO</string>
     <string name="sign_in">Sign in</string>
-    <string name="facebook_app_id">431435941052905</string> <string name="fb_login_protocol_scheme">fb431435941052905</string>
+    <string name="facebook_app_id">431435941052905</string>
+    <string name="fb_login_protocol_scheme">fb431435941052905</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->

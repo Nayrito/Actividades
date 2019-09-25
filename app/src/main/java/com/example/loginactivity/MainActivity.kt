@@ -2,6 +2,7 @@ package com.example.loginactivity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -14,7 +15,10 @@ import com.example.loginactivity.ui.main.SectionsPagerAdapter
 import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
     private var user = FirebaseAuth.getInstance().currentUser
@@ -27,7 +31,9 @@ class MainActivity : AppCompatActivity() {
         viewPager.adapter = sectionsPagerAdapter
         val tabs: TabLayout = findViewById(R.id.tabs)
         tabs.setupWithViewPager(viewPager)
-        saveUser(user)
+        if(user != null) {
+            saveUser(user)
+        }
 
 
 
@@ -48,8 +54,13 @@ class MainActivity : AppCompatActivity() {
     fun logOutMenuOnClicked(item:MenuItem){
 
         FirebaseAuth.getInstance().signOut()
-        //LoginManager.getInstance().logOut()
+        LoginManager.getInstance().logOut()
         goToLoginActivity()
+    }
+    fun PerfilMenuOnClicked(item:MenuItem){
+        val intent = Intent(this,Perfil_Activity::class.java)
+        startActivity(intent)
+
     }
 
     private fun goToLoginActivity() {
@@ -67,7 +78,28 @@ class MainActivity : AppCompatActivity() {
         val user = User(name,email,id )
         val database= FirebaseDatabase.getInstance()
         val myRef = database.getReference("usuarios")
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
 
-        myRef.child(id).setValue(user)
+                for (snapshot: DataSnapshot in dataSnapshot.children){
+                    if(!snapshot.child(id).exists()){
+                        myRef.child(id).setValue(user)
+                    }
+
+
+                }
+                //userAdapter.notifyDataSetChanged()
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w("value", "Failed to read value.", error.toException())
+            }
+        })
+
+
     }
 }

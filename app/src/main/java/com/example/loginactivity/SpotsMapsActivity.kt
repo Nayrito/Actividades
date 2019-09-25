@@ -71,6 +71,26 @@ class SpotsMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.addMarker(MarkerOptions().position(sur).title(key))
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sur,15.0f))
         }
+        if(key.equals("Skatepark Estadio")) {
+            val sur = LatLng(6.2544484,-75.5884765)
+            mMap.addMarker(MarkerOptions().position(sur).title(key))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sur, 15.0f))
+        }
+        if(key.equals("Bowl Ciudad del Río")) {
+            val sur = LatLng(6.2212999,-75.5754407)
+            mMap.addMarker(MarkerOptions().position(sur).title(key))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sur, 15.0f))
+        }
+        if(key.equals("Skatepark la 64")) {
+            val sur = LatLng(6.2883733,-75.5722781)
+            mMap.addMarker(MarkerOptions().position(sur).title(key))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sur, 15.0f))
+        }
+        if(key.equals("Viga Skatepark")) {
+            val sur = LatLng(6.169341,-75.5982938)
+            mMap.addMarker(MarkerOptions().position(sur).title(key))
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sur, 15.0f))
+        }
     }
     private fun setUpMap() {
         if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){

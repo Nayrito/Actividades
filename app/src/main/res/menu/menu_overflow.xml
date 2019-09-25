@@ -5,6 +5,7 @@
             android:title="@string/perfil"
             android:id="@+id/mperfil"
             app:showAsAction="withText"
+            android:onClick="PerfilMenuOnClicked"
 
     />
 
